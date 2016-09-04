@@ -1,0 +1,29 @@
+{
+  "name": "reyzedbot",
+  "version": "1.0.0",
+  "description": "Multifunction bot for twitch.tv and beam.pro streamers.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zreynolds91/ReyzedBot.git"
+  },
+  "keywords": [
+    "twitch",
+    "beam",
+    "streamer",
+    "bot"
+  ],
+  "author": "zreynolds91",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zreynolds91/ReyzedBot/issues"
+  },
+  "homepage": "https://github.com/zreynolds91/ReyzedBot#readme",
+  "dependencies": {
+    "beam-client-node": "^0.7.1",
+    "tmi.js": "^1.1.1"
+  }
+}

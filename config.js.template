@@ -1,0 +1,19 @@
+/**
+* You can find your channel id by going to https://beam.pro/api/v1/channels/username?fields=id 
+* in your browser. Replacing username with your Beam username.
+*
+* To find your the oauth password for the twitch bot account use https://twitchapps.com/tmi/
+*/
+var config = {
+	beam: {
+		channelId: '12345',
+		userName: 'replaceThisUserName',
+		password: 'replaceWithBeamBotAccountPassword'
+	},
+	twitch: {
+		channelName: 'replaceThisChannelName',
+		userName: 'replaceThisUserName',
+		password: 'replaceWithTwitchBotAccountOAuthPassword'
+	}
+};
+module.exports = config;

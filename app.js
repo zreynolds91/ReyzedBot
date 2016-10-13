@@ -1,10 +1,8 @@
 var tmi = require('tmi.js');
+var config = require('./config');
 
 const BeamClientNode = require('beam-client-node');
 const BeamSocketNode = require('beam-client-node/lib/ws');
-
-var beamUserName = 'Fric';
-var twitchUserName = 'fricules';
 
 var options = {
 	options: {
@@ -15,10 +13,10 @@ var options = {
 		reconnect: true
 	},
 	identity: {
-		username: twitchUserName,
-		password: "oauth:fihdqlb3eismsjaqbfqz7j6y78zjx8"
+		username: config.twitch.userName,
+		password: config.twitch.password
 	},
-	channels: ["kulwych"]
+	channels: [config.twitch.channelName]
 };
 
 let userInfo;
@@ -29,21 +27,21 @@ twitchClient.connect();
 var beamClient = new BeamClientNode();
 
 beamClient.use('password', {
-	username: beamUserName,
-	password: 'password'
+	username: config.beam.userName,
+	password: config.beam.password
 })
 .attempt()
 .then(response => {
 	userInfo = response.body;
-	return beamClient.chat.join(response.body.channel.id);
+	return beamClient.chat.join(config.beam.channelId);
 })
 .then(response => {
 	const beamSocket = new BeamSocketNode(response.body.endpoints).boot();
 	
 	// Copy chat to twitch
 	beamSocket.on('ChatMessage', data => {
-		if (beamUserName.toLowerCase() != data.user_name.toLowerCase()) {
-			twitchClient.say("kulwych", '[Beam - ' + data.user_name + ']: ' + data.message.message[0].data);
+		if (config.beam.userName.toLowerCase() != data.user_name.toLowerCase()) {
+			twitchClient.say(config.twitch.channelName, '[Beam - ' + data.user_name + ']: ' + data.message.message[0].data);
 		}
 	});
 	
@@ -59,10 +57,9 @@ beamClient.use('password', {
         console.error('Socket error', error);
     });
 	
-	return beamSocket.auth(userInfo.channel.id, userInfo.id, response.body.authkey)
+	return beamSocket.auth(config.beam.channelId, userInfo.id, response.body.authkey)
     .then(() => {
         console.log('Beam Login successful');
-        return beamSocket.call('msg', ['Hello World!']);
     });
 	
 })
@@ -72,6 +69,4 @@ beamClient.use('password', {
 
 twitchClient.on('connected', function(address, port) {
 	console.log("Address: " + address + " on Port: " + port);
-	twitchClient.action("kulwych", "Hello world!")
-	beamClient
 });
